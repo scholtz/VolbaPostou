@@ -14,6 +14,10 @@ class Main extends \AsyncWeb\Frontend\Block{
 		$obce = array();
 		$db = array();
 	
+		$db["mvsr"] = array(
+		"id","id2","Nemám trvalý pobyt na Slovensku","mvsr","region","pocetobyvatelov","ppz","Ministerstvo vnútra Slovenskej republiky\nodbor volieb, referenda a politických strán","Drienová","22","826 86","Bratislava 29","primator","starosta","prednosta","smerovecislo","telefon","fax","mobil","volby@minv.sk","web","id3","zdroj","created","od","do","edited_by","lchange"
+		);
+		$obce["mvsr"] = "Nemám trvalý pobyt na Slovensku";
 		if (($handle = fopen("../obce.csv", "r")) !== FALSE) {
 			while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {$i++;
 				if($i==1){
@@ -26,7 +30,6 @@ class Main extends \AsyncWeb\Frontend\Block{
 				}
 			}
 		}
-
 		
 		
 		if(URLParser::v("get") && isset($db[URLParser::v("obec")]) && $obec = $db[URLParser::v("obec")]){
@@ -141,16 +144,7 @@ class Main extends \AsyncWeb\Frontend\Block{
 			$textrun = $section->addTextRun('pStyle');
 			$textrun->addTextBreak();
 			$textrun->addTextBreak();
-			$textrun->addText(htmlspecialchars("\t\t\t\t\t\t\t".$obec[$n2k["urad"]]),array('bold' => true));
-			$textrun->addTextBreak();
-			$textrun->addText(htmlspecialchars("\t\t\t\t\t\t\t".$obec[$n2k["ulica"]]." ".$obec[$n2k["cislo"]]));
-			$textrun->addTextBreak();
-			$textrun->addText(htmlspecialchars("\t\t\t\t\t\t\t".$obec[$n2k["psc"]]." ".$obec[$n2k["posta"]]));
-			$emails = explode(";",$obec[$n2k["email"]]);
-			foreach($emails as $email){
-				$textrun->addTextBreak();
-				$textrun->addText(htmlspecialchars("\t\t\t\t\t\t\t".$email));
-			}
+			$this->spracujAdresuPrijemcu($textrun,$obec,$n2k);
 			$textrun->addTextBreak();
 			$textrun->addTextBreak();
 			$textrun->addTextBreak();
@@ -232,16 +226,7 @@ class Main extends \AsyncWeb\Frontend\Block{
 			$textrun = $section->addTextRun('pStyle');
 			$textrun->addTextBreak();
 			$textrun->addTextBreak();
-			$textrun->addText(htmlspecialchars("\t\t\t\t\t\t\t".$obec[$n2k["urad"]]),array('bold' => true));
-			$textrun->addTextBreak();
-			$textrun->addText(htmlspecialchars("\t\t\t\t\t\t\t".$obec[$n2k["ulica"]]." ".$obec[$n2k["cislo"]]));
-			$textrun->addTextBreak();
-			$textrun->addText(htmlspecialchars("\t\t\t\t\t\t\t".$obec[$n2k["psc"]]." ".$obec[$n2k["posta"]]));
-			$emails = explode(";",$obec[$n2k["email"]]);
-			foreach($emails as $email){
-				$textrun->addTextBreak();
-				$textrun->addText(htmlspecialchars("\t\t\t\t\t\t\t".$email));
-			}
+			$this->spracujAdresuPrijemcu($textrun,$obec,$n2k);
 			$textrun->addTextBreak();
 			$textrun->addTextBreak();
 			$textrun->addTextBreak();
@@ -331,17 +316,7 @@ class Main extends \AsyncWeb\Frontend\Block{
 			$textrun->addTextBreak();
 			$textrun->addTextBreak();
 			$textrun->addTextBreak();
-			$textrun->addText(htmlspecialchars("\t\t\t\t\t\t\t".$obec[$n2k["urad"]]),array('bold' => true));
-			$textrun->addTextBreak();
-			$textrun->addText(htmlspecialchars("\t\t\t\t\t\t\t".$obec[$n2k["ulica"]]." ".$obec[$n2k["cislo"]]));
-			$textrun->addTextBreak();
-			$textrun->addText(htmlspecialchars("\t\t\t\t\t\t\t".$obec[$n2k["psc"]]." ".$obec[$n2k["posta"]]));
-
-			$emails = explode(";",$obec[$n2k["email"]]);
-			foreach($emails as $email){
-				$textrun->addTextBreak();
-				$textrun->addText(htmlspecialchars("\t\t\t\t\t\t\t".$email));
-			}
+			$this->spracujAdresuPrijemcu($textrun,$obec,$n2k);
 			$textrun->addTextBreak();
 			$textrun->addTextBreak();
 			$textrun->addTextBreak();
@@ -386,6 +361,7 @@ class Main extends \AsyncWeb\Frontend\Block{
 			$section = $phpWord->addSection();
 
 			$textrun = $section->addTextRun('pStyler');
+			
 			$textrun->addText(htmlspecialchars("ŽIADOSŤ VYPLŇTE VEĽKÝMI PÍSMENAMI."),array('bold' => true));
 			$textrun->addTextBreak();
 			$textrun->addTextBreak();
@@ -397,17 +373,9 @@ class Main extends \AsyncWeb\Frontend\Block{
 			$textrun->addTextBreak();
 			$textrun->addTextBreak();
 			$textrun->addTextBreak();
-			$textrun->addText(htmlspecialchars("\t\t\t\t\t\t\t".$obec[$n2k["urad"]]),array('bold' => true));
-			$textrun->addTextBreak();
-			$textrun->addText(htmlspecialchars("\t\t\t\t\t\t\t".$obec[$n2k["ulica"]]." ".$obec[$n2k["cislo"]]));
-			$textrun->addTextBreak();
-			$textrun->addText(htmlspecialchars("\t\t\t\t\t\t\t".$obec[$n2k["psc"]]." ".$obec[$n2k["posta"]]));
-
-			$emails = explode(";",$obec[$n2k["email"]]);
-			foreach($emails as $email){
-				$textrun->addTextBreak();
-				$textrun->addText(htmlspecialchars("\t\t\t\t\t\t\t".$email));
-			}
+			
+			$this->spracujAdresuPrijemcu($textrun,$obec,$n2k);
+			
 			$textrun->addTextBreak();
 			$textrun->addTextBreak();
 			$textrun->addTextBreak();
@@ -441,6 +409,22 @@ class Main extends \AsyncWeb\Frontend\Block{
 			$textrun->addText(htmlspecialchars("CELÉ MENO"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
 			return $phpWord;
 
+	}
+	public function spracujAdresuPrijemcu(&$textrun,&$obec,&$n2k){
+			$urada = explode("\n",$obec[$n2k["urad"]]);
+			foreach($urada as $item){
+				$textrun->addText(htmlspecialchars("\t\t\t\t\t\t".$item),array('bold' => true));
+				$textrun->addTextBreak();
+			}
+			$textrun->addText(htmlspecialchars("\t\t\t\t\t\t".$obec[$n2k["ulica"]]." ".$obec[$n2k["cislo"]]));
+			$textrun->addTextBreak();
+			$textrun->addText(htmlspecialchars("\t\t\t\t\t\t".$obec[$n2k["psc"]]." ".$obec[$n2k["posta"]]));
+
+			$emails = explode(";",$obec[$n2k["email"]]);
+			foreach($emails as $email){
+				$textrun->addTextBreak();
+				$textrun->addText(htmlspecialchars("\t\t\t\t\t\t".$email));
+			}
 	}
 	public function posliSubor($phpWord){
 
