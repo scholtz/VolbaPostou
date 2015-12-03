@@ -31,12 +31,16 @@ class Main extends \AsyncWeb\Frontend\Block{
 		
 		if(URLParser::v("get") && isset($db[URLParser::v("obec")]) && $obec = $db[URLParser::v("obec")]){
 			if(URLParser::v("how") == "preukaz"){
-				$this->vytvorZiadostHlasovaciPreukaz($obec,$n2k);
+				$phpWord = $this->vytvorZiadostHlasovaciPreukaz($obec,$n2k);
 			}elseif(URLParser::v("how") == "preukazsplnomocnene"){
-				$this->vytvorZiadostHlasovaciPreukazSplnomocnene($obec,$n2k);
+				$phpWord = $this->vytvorZiadostHlasovaciPreukazSplnomocnene($obec,$n2k);
 			}elseif(URLParser::v("how") == "postousr"){
-				$this->vytvorZiadostHlasovaniePostou($obec,$n2k);
+				$phpWord = $this->vytvorZiadostHlasovaniePostou($obec,$n2k);
 			}
+			if($phpWord){
+				$this->posliSubor($phpWord);		
+			}
+			
 		}
 		
 		$ret = '<h1>Vytvorte si žiadosť pre získanie volebného preukazu</h1>';
@@ -44,7 +48,7 @@ class Main extends \AsyncWeb\Frontend\Block{
 		
 		$ret.=$this->vytvorFormular($obce);
 		
-		$ret.='<p>Zatiaľ je podporovaná iba funkcia vytvorenia vzoru. Zadávanie citlivých údajov a automatická tvorba PDF, prípadne automatické odoslanie na úrad nie je momentálne k dispozícii. </p>';
+		$ret.='<p>Touto aplikáciou si môžete vygenerovať upravený vzor, ktorý po doplnení osobných údajov môžete odoslať na úrad vašej obce, a oni Vám odošlú hlasovací preukaz alebo hlasovacie lístky pre hlasovanie poštou.</p>';
 		$ret.='<p>Vo vygenerovanom súbore v hlavičke je k dispozícii email na ktorý máte žiadosť odoslať. Postupujte nasledovne:</p>
 		<ol>
 		<li>Vyberte si formát súboru: .docx, .odt, alebo .rtf</li>
@@ -52,9 +56,24 @@ class Main extends \AsyncWeb\Frontend\Block{
 		<li>Stiahnite si vzor</li>
 		<li>Na vyznačené miesta doplňte osobné údaje</li>
 		<li>Uložte do formátu PDF, alebo si nainštalujte <a href="http://www.cutepdf.com/Products/CutePDF/writer.asp">CutePDF</a> a vytlačte dokument do PDF.</li>
-		<li>Podpíšte súbor certifikátom. Ideálne z občianskeho preukazu</li>
+		<li>Podpíšte PDF súbor elektronickým podpisom napríklad s Občianskym preukazom cez aplikáciu <a href="https://www.slovensko.sk/sk/na-stiahnutie/">XZep Signer</a></li>
 		<li>Odošlite na email ktorý je uvedený vo vygenerovanom súbore. (Ak je z emailu rozpoznateľný starosta, odošlite to na druhý email).</li>
 		</ol>
+		
+		';
+		$ret.='<p>Ďalšie zdroje informácií:</p>
+		<ul>
+		<li><a target="_blank" href="https://platforma.slovensko.digital/t/registracia-na-volby-postou-zo-zahranicia-alebo-volicsky-preukaz/893/34">Diskusia o registrácii na hlasovanie</a></li>
+		<li><a target="_blank" href="http://www.minv.sk/?nr16-preukaz">Oficiálne informácie o hlasovaní hlasovacím preukazom</a></li>
+		<li><a target="_blank" href="http://www.minv.sk/?nr16-preukaz&subor=230515">Oficiálna žiadosť o vydanie hlasovacieho preukazu (62,2 kB)</a></li>
+		<li><a target="_blank" href="http://www.minv.sk/?nr16-preukaz&subor=230517">Oficiálna žiadosť o vydanie hlasovacieho preukazu a splnomocnenie na jeho prevzatie (61,0 kB)</a></li>
+		<li><a target="_blank" href="http://www.minv.sk/?nr16-preukaz&subor=230518">Oficiálne splnomocnenie (58,6 kB)</a></li>
+		<li><a target="_blank" href="http://www.minv.sk/?nr16-posta2">Oficiálne informácie o hlasovaní hlasovaním poštou pre osoby s trvalým bydliskom na Slovensku</a></li>
+		<li><a target="_blank" href="http://www.minv.sk/?nr16-posta2&subor=220769">Oficiálna žiadosť o voľbu poštou pre voľby do Národnej rady Slovenskej republiky v roku 2016 (volič, ktorý má trvalý pobyt na území Slovenskej republiky a v čase volieb sa zdržiava mimo jej územia) (78,0 kB)</a></li>
+		<li><a target="_blank" href="http://www.minv.sk/?nr16-posta1">Oficiálne informácie o hlasovaní hlasovaním poštou pre osoby bez trvalého bydliska na Slovensku</a></li>
+		<li><a target="_blank" href="http://www.minv.sk/?nr16-posta1&subor=220768">Oficiálna žiadosť o voľbu poštou pre voľby do Národnej rady Slovenskej republiky v roku 2016 (volič, ktorý nemá trvalý pobyt na území Slovenskej republiky) (70,2 kB)</a></li>
+		<li><a target="_blank" href="http://www.minv.sk/?nr16-posta1&subor=230519">Čestné vyhlásenie (volič, ktorý nemá trvalý pobyt na území Slovenskej republiky) (36,2 kB)</a></li>		
+		</ul>
 		
 		';
 		
@@ -67,20 +86,6 @@ class Main extends \AsyncWeb\Frontend\Block{
 		$ret.='
 		
       <div class="form-group">
-        <label for="type" class="col-sm-2 control-label">Čo chete urobiť?</label>
-        <div class="col-sm-10">
-          <select id="type" name="type" class="form-control">
-            <option value="1">Vytvoriť upravený vzor .xdoc &gt; Doplniť citlivé údaje &gt; Vytvoriť PDF &gt; Podpísať súbor  &gt; Odoslať samostatne  na úrad </option>
-            <option value="2">Vytvoriť upravený vzor .odt &gt; Doplniť citlivé údaje &gt; Vytvoriť PDF &gt; Podpísať súbor  &gt; Odoslať samostatne  na úrad </option>
-            <option value="3">Vytvoriť upravený vzor .rtf &gt; Doplniť citlivé údaje &gt; Vytvoriť PDF &gt; Podpísať súbor  &gt; Odoslať samostatne  na úrad </option>
-            <option value="4">Vytvoriť dokument .xdoc &gt; Vytvoriť PDF &gt; Podpísať súbor  &gt; Odoslať samostatne  na úrad </option>
-            <option value="5">Vytvoriť dokument .odt &gt; Vytvoriť PDF &gt; Podpísať súbor  &gt; Odoslať samostatne  na úrad </option>
-            <option value="6">Vytvoriť dokument .pdf &gt; Samostatne podpísať súbor  &gt; Odoslať samostatne na úrad </option>
-            <option value="7">Vytvoriť podpísaný dokument .pdf &gt; Odoslať na úrad systémom </option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group">
         <label for="how" class="col-sm-2 control-label">Ako chcete voliť?</label>
         <div class="col-sm-10">
           <select id="how" name="how" class="form-control">
@@ -89,8 +94,7 @@ class Main extends \AsyncWeb\Frontend\Block{
             <option value="postousr">Chcem voliť poštou zo zahraničia</option>
           </select>
         </div>
-      </div>
-      <div class="form-group">
+      </div>      <div class="form-group">
         <label for="obec" class="col-sm-2 control-label">Vaše trvalé bydlisko je vedené v obci:</label>
         <div class="col-sm-10">
           <select id="obec" name="obec" class="form-control">';
@@ -101,6 +105,17 @@ class Main extends \AsyncWeb\Frontend\Block{
           </select>
         </div>
       </div>
+      <div class="form-group">
+        <label for="type" class="col-sm-2 control-label">Aký formát vzoru si môžete upraviť?</label>
+        <div class="col-sm-10">
+          <select id="type" name="type" class="form-control">
+            <option value="1">Vzor pre moju obec vo formáte .xdoc</option>
+            <option value="2">Vzor pre moju obec vo formáte .odt</option>
+            <option value="3">Vzor pre moju obec vo formáte .rtf</option>
+          </select>
+        </div>
+      </div>
+
     <div class="form-group has-error has-feedback">
       <label class="col-sm-2 control-label"></label>
       <div class="col-sm-10">
@@ -200,33 +215,7 @@ class Main extends \AsyncWeb\Frontend\Block{
 			$textrun = $section->addTextRun('pStyler');
 			$textrun->addText(htmlspecialchars("MENO ALEBO PODPIS"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
 			
-			
-			if(URLParser::v("type") == "1"){
-				$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-				$objWriter->save($name = '../docs/'.md5(uniqid()).'.docx');
-				$pripona = ".docx";
-			}elseif(URLParser::v("type") == "2"){
-				$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'ODText');
-				$objWriter->save($name = '../docs/'.md5(uniqid()).'.odt');
-				$pripona = ".odt";
-			}elseif(URLParser::v("type") == "3"){
-				$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'RTF');
-				$objWriter->save($name = '../docs/'.md5(uniqid()).'.rtf');
-				$pripona = ".rtf";
-			}
-			
-			header('Content-Description: File Transfer');
-			header('Content-Type: application/octet-stream');
-			header('Content-Disposition: attachment; filename=NaPodpis'.$pripona);
-			header('Content-Transfer-Encoding: binary');
-			header('Expires: 0');
-			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-			header('Pragma: public');
-			header('Content-Length: ' . filesize($name));
-			flush();
-			readfile($name);
-			unlink($name);
-			exit; 	
+			return $phpWord;
 	}
 	public function vytvorZiadostHlasovaciPreukazSplnomocnene($obec,$n2k){
 		
@@ -289,32 +278,36 @@ class Main extends \AsyncWeb\Frontend\Block{
 			$textrun->addTextBreak();
 			$textrun->addText(htmlspecialchars("\t\t\t\t"));
 			$textrun->addText(htmlspecialchars("CELÉ MENO"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
-			
-			if(URLParser::v("type") == "1"){
-				$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-				$objWriter->save($name = '../docs/'.md5(uniqid()).'.docx');
-				$pripona = ".docx";
-			}elseif(URLParser::v("type") == "2"){
-				$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'ODText');
-				$objWriter->save($name = '../docs/'.md5(uniqid()).'.odt');
-				$pripona = ".odt";
-			}elseif(URLParser::v("type") == "3"){
-				$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'RTF');
-				$objWriter->save($name = '../docs/'.md5(uniqid()).'.rtf');
-				$pripona = ".rtf";
-			}
-			
-			header('Content-Description: File Transfer');
-			header('Content-Type: application/octet-stream');
-			header('Content-Disposition: attachment; filename=NaPodpis'.$pripona);
-			header('Content-Transfer-Encoding: binary');
-			header('Expires: 0');
-			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-			header('Pragma: public');
-			header('Content-Length: ' . filesize($name));
-			flush();
-			readfile($name);
-			unlink($name);
-			exit; 	
+			return $phpWord;
+
+	}
+	public function posliSubor($phpWord){
+
+				if(URLParser::v("type") == "1"){
+					$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+					$objWriter->save($name = '../docs/'.md5(uniqid()).'.docx');
+					$pripona = ".docx";
+				}elseif(URLParser::v("type") == "2"){
+					$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'ODText');
+					$objWriter->save($name = '../docs/'.md5(uniqid()).'.odt');
+					$pripona = ".odt";
+				}elseif(URLParser::v("type") == "3"){
+					$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'RTF');
+					$objWriter->save($name = '../docs/'.md5(uniqid()).'.rtf');
+					$pripona = ".rtf";
+				}
+				
+				header('Content-Description: File Transfer');
+				header('Content-Type: application/octet-stream');
+				header('Content-Disposition: attachment; filename=NaPodpis'.$pripona);
+				header('Content-Transfer-Encoding: binary');
+				header('Expires: 0');
+				header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+				header('Pragma: public');
+				header('Content-Length: ' . filesize($name));
+				flush();
+				readfile($name);
+				unlink($name);
+				exit; 					
 	}
 }
