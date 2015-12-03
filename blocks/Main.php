@@ -15,7 +15,7 @@ class Main extends \AsyncWeb\Frontend\Block{
 		$db = array();
 	
 		$db["mvsr"] = array(
-		"id","id2","Nemám trvalý pobyt na Slovensku","mvsr","region","pocetobyvatelov","ppz","Ministerstvo vnútra Slovenskej republiky\nodbor volieb, referenda a politických strán","Drienová","22","826 86","Bratislava 29","primator","starosta","prednosta","smerovecislo","telefon","fax","mobil","volby@minv.sk","web","id3","zdroj","created","od","do","edited_by","lchange"
+		"id","id2","Nemám trvalý pobyt na Slovensku","mvsr","region","pocetobyvatelov","ppz","Ministerstvo vnútra Slovenskej republiky\nodbor volieb, referenda a politických strán","Drieňová","22","826 86","Bratislava 29","primator","starosta","prednosta","smerovecislo","telefon","fax","mobil","volby@minv.sk","web","id3","zdroj","created","od","do","edited_by","lchange"
 		);
 		$obce["mvsr"] = "Nemám trvalý pobyt na Slovensku";
 		if (($handle = fopen("../obce.csv", "r")) !== FALSE) {
@@ -48,7 +48,8 @@ class Main extends \AsyncWeb\Frontend\Block{
 			
 		}
 		
-		$ret = '<h1>Vytvorte si žiadosť pre získanie volebného preukazu</h1>';
+		$ret = '<h1>Vytvorte si vzor žiadosti</h1>';
+		$ret.= '<p>Pre voľbu poštou alebo žiadosti o voličský preukaz</p>';
 		
 		
 		$ret.=$this->vytvorFormular($obce);
@@ -332,22 +333,56 @@ class Main extends \AsyncWeb\Frontend\Block{
 			$textrun->addText(htmlspecialchars("Priezvisko:\t\t\t"));
 			$textrun->addText(htmlspecialchars("PRIEZVISKO"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
 			$textrun->addTextBreak();
-			$textrun->addText(htmlspecialchars("R.č.:\t\t\t\t"));
+			$textrun->addText(htmlspecialchars("Rodné priezvisko:\t\t"));
+			$textrun->addText(htmlspecialchars("RODNÉ PRIEZVISKO"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			$textrun->addTextBreak();
+			$textrun->addText(htmlspecialchars("Rodné číslo:\t\t\t"));
 			$textrun->addText(htmlspecialchars("RODNÉ ČÍSLO"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
 			$textrun->addTextBreak();
-			$textrun->addText(htmlspecialchars("Adresa:\t\t\t\t"));
-			$textrun->addText(htmlspecialchars("ADRESA TRVALÉHO BYDLISKA"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
 			$textrun->addTextBreak();
-			$textrun->addText(htmlspecialchars("Adresa kde zaslať hárky:\t"));
-			$textrun->addText(htmlspecialchars("ADRESA Z KADE CHCETE VOLIŤ"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			$textrun->addText(htmlspecialchars("Adresa trvalého pobytu v Slovenskej republike:"));
 			$textrun->addTextBreak();
-
+			$textrun->addText(htmlspecialchars("Ulica:\t\t\t\t"));
+			$textrun->addText(htmlspecialchars("ULICA"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
 			$textrun->addTextBreak();
-			$textrun->addText(htmlspecialchars("S pozdravom,"),array('bold' => true));
+			$textrun->addText(htmlspecialchars("Číslo domu:\t\t\t"));
+			$textrun->addText(htmlspecialchars("ČÍSLO DOMU"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			$textrun->addTextBreak();
+			$textrun->addText(htmlspecialchars("Obec:\t\t\t\t"));
+			$textrun->addText(htmlspecialchars("OBEC"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			$textrun->addTextBreak();
+			$textrun->addText(htmlspecialchars("PSČ:\t\t\t\t"));
+			$textrun->addText(htmlspecialchars("PSČ"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
 			$textrun->addTextBreak();
 			$textrun->addTextBreak();
-			$textrun->addText(htmlspecialchars("\t\t\t\t"));
-			$textrun->addText(htmlspecialchars("CELÉ MENO"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			$textrun->addText(htmlspecialchars("Adresa miesta pobytu v cudzine (pre zaslanie hlasovacích lístkov a obálok):"));
+			$textrun->addTextBreak();
+			$textrun->addText(htmlspecialchars("Ulica:\t\t\t\t"));
+			$textrun->addText(htmlspecialchars("ULICA"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			$textrun->addTextBreak();
+			$textrun->addText(htmlspecialchars("Číslo domu:\t\t\t"));
+			$textrun->addText(htmlspecialchars("ČÍSLO DOMU"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			$textrun->addTextBreak();
+			$textrun->addText(htmlspecialchars("Obec:\t\t\t\t"));
+			$textrun->addText(htmlspecialchars("OBEC"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			$textrun->addTextBreak();
+			$textrun->addText(htmlspecialchars("PSČ:\t\t\t\t"));
+			$textrun->addText(htmlspecialchars("PSČ"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			$textrun->addTextBreak();
+			$textrun->addText(htmlspecialchars("Štát:\t\t\t\t"));
+			$textrun->addText(htmlspecialchars("ŠTÁT"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addText(htmlspecialchars("V "));
+			$textrun->addText(htmlspecialchars("MIESTO KDE SA NACHÁDZATE"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			$textrun->addText(htmlspecialchars(", dňa "));
+			$textrun->addText(htmlspecialchars("DNEŠNÝ DÁTUM"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			
+			$textrun->addTextBreak();
+			$textrun = $section->addTextRun('pStyler');
+			$textrun->addText(htmlspecialchars("MENO ALEBO PODPIS"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			
 			return $phpWord;
 
 	}
@@ -358,10 +393,10 @@ class Main extends \AsyncWeb\Frontend\Block{
 			$phpWord->addParagraphStyle('pStylec', array('spacing' => 5,'align' => 'center'));
 			$phpWord->addParagraphStyle('pStyler', array('spacing' => 5,'align' => 'right'));
 			
+			
 			$section = $phpWord->addSection();
 
 			$textrun = $section->addTextRun('pStyler');
-			
 			$textrun->addText(htmlspecialchars("ŽIADOSŤ VYPLŇTE VEĽKÝMI PÍSMENAMI."),array('bold' => true));
 			$textrun->addTextBreak();
 			$textrun->addTextBreak();
@@ -373,16 +408,14 @@ class Main extends \AsyncWeb\Frontend\Block{
 			$textrun->addTextBreak();
 			$textrun->addTextBreak();
 			$textrun->addTextBreak();
-			
 			$this->spracujAdresuPrijemcu($textrun,$obec,$n2k);
-			
 			$textrun->addTextBreak();
 			$textrun->addTextBreak();
 			$textrun->addTextBreak();
 			$textrun->addTextBreak();
 			
 
-			$textrun->addText(htmlspecialchars("Podľa § 60 ods. 1 zákona č. 180/2014 Z. z. o podmienkach výkonu volebného práva a o zmene a doplnení niektorých zákonov žiadam o voľbu poštou pre voľby do Národnej rady Slovenskej republiky v roku 2016."));
+			$textrun->addText(htmlspecialchars("Podľa   § 59 ods. 1   zákona   č. 180/2014 Z. z. o podmienkach výkonu volebného práva a o zmene a doplnení niektorých zákonov žiadam o voľbu poštou pre voľby do Národnej rady Slovenskej republiky v roku 2016 a o zaslanie hlasovacích lístkov a obálok na adresu:"));
 			$textrun->addTextBreak();
 			$textrun->addTextBreak();
 			$textrun->addText(htmlspecialchars("Meno:\t\t\t\t"));
@@ -391,22 +424,113 @@ class Main extends \AsyncWeb\Frontend\Block{
 			$textrun->addText(htmlspecialchars("Priezvisko:\t\t\t"));
 			$textrun->addText(htmlspecialchars("PRIEZVISKO"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
 			$textrun->addTextBreak();
-			$textrun->addText(htmlspecialchars("R.č.:\t\t\t\t"));
+			$textrun->addText(htmlspecialchars("Rodné priezvisko:\t\t"));
+			$textrun->addText(htmlspecialchars("RODNÉ PRIEZVISKO"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			$textrun->addTextBreak();
+			$textrun->addText(htmlspecialchars("Rodné číslo:\t\t\t"));
 			$textrun->addText(htmlspecialchars("RODNÉ ČÍSLO"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
 			$textrun->addTextBreak();
-			$textrun->addText(htmlspecialchars("Adresa:\t\t\t\t"));
-			$textrun->addText(htmlspecialchars("ADRESA TRVALÉHO BYDLISKA"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			$textrun->addText(htmlspecialchars("Ulica:\t\t\t\t"));
+			$textrun->addText(htmlspecialchars("ULICA"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
 			$textrun->addTextBreak();
-			$textrun->addText(htmlspecialchars("Adresa kde zaslať hárky:\t"));
-			$textrun->addText(htmlspecialchars("ADRESA Z KADE CHCETE VOLIŤ"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			$textrun->addText(htmlspecialchars("Číslo domu:\t\t\t"));
+			$textrun->addText(htmlspecialchars("ČÍSLO DOMU"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
 			$textrun->addTextBreak();
+			$textrun->addText(htmlspecialchars("Obec:\t\t\t\t"));
+			$textrun->addText(htmlspecialchars("OBEC"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			$textrun->addTextBreak();
+			$textrun->addText(htmlspecialchars("PSČ:\t\t\t\t"));
+			$textrun->addText(htmlspecialchars("PSČ"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			$textrun->addTextBreak();
+			$textrun->addText(htmlspecialchars("Štát:\t\t\t\t"));
+			$textrun->addText(htmlspecialchars("ŠTÁT"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addText(htmlspecialchars("Prílohy:"));
+			$textrun->addTextBreak();
+			$textrun->addText(htmlspecialchars("- čestné vyhlásenie voliča, že nemá trvalý pobyt na území Slovenskej republiky."));
+			$textrun->addTextBreak();
+			$textrun->addText(htmlspecialchars("- fotokópia časti cestovného dokladu Slovenskej republiky s osobnými údajmi voliča alebo fotokópia osvedčenia o štátnom občianstve Slovenskej republiky voliča."));
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addText(htmlspecialchars("V "));
+			$textrun->addText(htmlspecialchars("MIESTO KDE SA NACHÁDZATE"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			$textrun->addText(htmlspecialchars(", dňa "));
+			$textrun->addText(htmlspecialchars("DNEŠNÝ DÁTUM"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			
+			$textrun->addTextBreak();
+			$textrun = $section->addTextRun('pStyler');
+			$textrun->addText(htmlspecialchars("MENO ALEBO PODPIS"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			
+			$section = $phpWord->addSection();
 
+			$textrun = $section->addTextRun('pStylec');
+			$textrun->addText(htmlspecialchars("meno, priezvisko, rodné číslo alebo dátum narodenia, adresa trvalého pobytu v cudzine"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			
 			$textrun->addTextBreak();
-			$textrun->addText(htmlspecialchars("S pozdravom,"),array('bold' => true));
 			$textrun->addTextBreak();
 			$textrun->addTextBreak();
-			$textrun->addText(htmlspecialchars("\t\t\t\t"));
-			$textrun->addText(htmlspecialchars("CELÉ MENO"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addText(htmlspecialchars("ČESTNÉ VYHLÁSENIE"),array('size'=>20));
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addText(htmlspecialchars("Na účely voľby poštou do Národnej rady Slovenskej republiky v roku 2016"),array('size'=>12));
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addText(htmlspecialchars("čestne vyhlasujem,"),array('size'=>12,'bold'=>true));
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addText(htmlspecialchars("že nemám trvalý pobyt na území Slovenskej republiky."),array('size'=>12));
+			
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun->addTextBreak();
+			$textrun = $section->addTextRun('pStylel');
+			$textrun->addText(htmlspecialchars("V "));
+			$textrun->addText(htmlspecialchars("MIESTO KDE SA NACHÁDZATE"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			$textrun->addText(htmlspecialchars(", dňa "));
+			$textrun->addText(htmlspecialchars("DNEŠNÝ DÁTUM"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			
+			$textrun->addTextBreak();
+			$textrun = $section->addTextRun('pStyler');
+			$textrun->addText(htmlspecialchars("MENO ALEBO PODPIS"),array('bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			
+			
+			$section = $phpWord->addSection();
+
+			$textrun = $section->addTextRun('pStylec');
+			$textrun->addText(htmlspecialchars("fotokópia časti cestovného dokladu Slovenskej republiky s osobnými údajmi voliča alebo fotokópia osvedčenia o štátnom občianstve Slovenskej republiky voliča"),array('size'=>'30','bgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW));
+			
 			return $phpWord;
 
 	}
