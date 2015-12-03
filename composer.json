@@ -1,0 +1,30 @@
+{
+    "name": "scholtz/async-web-frontend"
+  , "type": "library"
+  , "description": "PHP WebSocket frontend for AsyncWeb"
+  , "keywords": ["AsyncWeb","Asynchonous web","WebSockets", "Server", "Ratchet", "Sockets", "Frontend"]
+  , "homepage": "https://github.com/scholtz/async-web-frontend/"
+  , "license": "GNU GPL 2"
+  , "authors": [
+        {
+            "name": "Ludovit Scholtz"
+          , "email": "ludko2@gmail.com"
+          , "role": "Developer"
+        }
+    ]
+  , "support": {
+        "forum":  "https://github.com/scholtz/AsyncWebFrontend/issues"
+      , "issues": "https://github.com/scholtz/AsyncWebFrontend/issues"
+    }
+  , "autoload": {
+        "psr-0": {
+            "MyApp": "src"
+        }
+    }
+  , "require": {
+		"phpoffice/phpword": "*",
+        "scholtz/async-web": "dev-master",
+		"scholtz/bootstrap-php" : "dev-master",
+		"mustache/mustache" : "~2.5"
+    }
+}

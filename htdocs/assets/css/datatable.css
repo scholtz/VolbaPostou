@@ -1,0 +1,117 @@
+.TableView thead tr{
+ background: #dddddd;
+ border-bottom:1px solid #cccccc;
+}
+.TableView{
+ border-collapse:collapse;
+ border:1px solid #cccccc;
+ width:100%;
+ margin: 0 0 3px 0;
+}
+.TableView tbody tr:hover{
+ background:#ccffcc;
+}
+.TableView td{
+ border-bottom:1px solid #dddddd;
+ border-right:1px solid #cccccc;
+}
+.TableView tfoot{
+ background: #dddddd;
+ font-size:80%;
+}
+
+
+a.button {
+ background-image: -moz-linear-gradient(top, #ffffff, #dbdbdb);
+ background-image: -webkit-gradient(linear,left top,left bottom, color-stop(0, #ffffff),color-stop(1, #dbdbdb));
+ filter: progid:DXImageTransform.Microsoft.gradient (startColorStr='#ffffff', EndColorStr='#dbdbdb');
+ -ms-filter: "progid:DXImageTransform.Microsoft.gradient (startColorStr='#ffffff', EndColorStr='#dbdbdb')";
+ border: 1px solid #fff;
+ -moz-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
+ -webkit-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
+ box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
+ border-radius: 3px;
+ -webkit-border-radius: 3px;
+ -moz-border-radius: 3px;
+ padding: 1px 3px;
+ text-decoration: none;
+ text-shadow: #fff 0 1px 0;
+ float: left;/**/
+ margin: 2px;
+ display: inline-block;
+ color: #597390;
+ line-height: 21px;
+ font-size: 16px;
+ font-weight: bold;
+ 
+}
+a.button:hover { 
+ background-image: -moz-linear-gradient(top, #ffffff, #eeeeee);
+ background-image: -webkit-gradient(linear,left top,left bottom, color-stop(0, #ffffff),color-stop(1, #eeeeee));
+ filter: progid:DXImageTransform.Microsoft.gradient (startColorStr='#ffffff', EndColorStr='#eeeeee');
+ -ms-filter: "progid:DXImageTransform.Microsoft.gradient (startColorStr='#ffffff', EndColorStr='#eeeeee')";
+ color: #000;
+ display: inline-block;
+}
+a.button:active {
+ background-image: -moz-linear-gradient(top, #dbdbdb, #ffffff);
+ background-image: -webkit-gradient(linear,left top,left bottom, color-stop(0, #dbdbdb),color-stop(1, #ffffff));
+ filter: progid:DXImageTransform.Microsoft.gradient (startColorStr='#dbdbdb', EndColorStr='#ffffff');
+ -ms-filter: "progid:DXImageTransform.Microsoft.gradient (startColorStr='#dbdbdb', EndColorStr='#ffffff')";
+ text-shadow: 0px -1px 0 rgba(255, 255, 255, 0.5);
+ margin-top: 1px;
+}
+a.button { border: 1px solid #979797; }
+
+.row0, .row1{
+ font-size: 14px;
+}
+.row0{
+ background:#ffffff;  
+}
+.row1{
+ background:#eeffff; 
+}
+
+
+.filterbox{
+	background:#cccccc;
+	position:absolute;
+	border:1px solid gray;
+	
+}
+.filterboxdiv{
+ display:none;
+}
+
+.function{
+ text-align:center;
+}
+
+a.float_right, .float_right{
+ float:right;
+}
+
+.menuboxbox{
+ display:none;
+}
+.menubox{
+ background: #eeeeee;
+ border:1px solid gray;
+}
+.table_menu_item{
+ font-size:23px;
+ padding:2px;
+ vertical-align:middle;
+ line-height:30px;
+}
+
+.table_menu_item img{
+    display: inline-block;
+    vertical-align: middle;
+	padding: 0 0 3px 0;
+}
+
+.clickable{
+ cursor: pointer;
+}
