@@ -1,0 +1,53 @@
+.fa.fa-exclamation-triangle,
+.fa.fa-info-circle,
+.fa.fa-ban {
+    font-size: 15px;
+    padding: 5px;
+}
+
+header .banner {
+    font-size: 18px;
+    margin: 20px 0;
+}
+
+header .navbar-header a.navbar-brand {
+    padding: 5px 15px;
+}
+
+header .navbar-header a.navbar-brand img {
+    width: 40px;
+    height: 40px;
+}
+
+header i.fa.fa-home {
+    font-size: 18px;
+}
+
+.panel-footer-templates-home,
+.panel-footer-templates-buttons {
+    display: inline-block;
+}
+
+footer {
+    background-color: #f8f8f8;
+    border: 1px solid #e7e7e7;
+    border-radius: 4px;
+    margin-top: 40px;
+}
+
+footer .brand-logo {
+    margin: 20px auto;
+    height: 64px;
+    width: 64px;
+}
+
+footer .footer-nav a {
+    padding: 10px;
+    display: block;
+}
+
+footer .author-logo {
+    margin: 20px auto;
+    height: 32px;
+    width: 30px;
+}

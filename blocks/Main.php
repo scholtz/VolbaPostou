@@ -50,9 +50,10 @@ class Main extends \AsyncWeb\Frontend\Block{
 		
 		$ret = '<h1>Vytvorte si vzor žiadosti</h1>';
 		$ret.= '<p>Pre voľbu poštou alebo žiadosti o voličský preukaz</p>';
-		
-		
+		 
 		$ret.=$this->vytvorFormular($obce);
+		
+		$ret.='<div class="well"><b>Tento formulár použite, ak si chcete vyskúšať použitie ZEP s komunikáciou s úradmi.</b> Pre žiadosť o voličský preukaz, ani pre žiadosť o voľbu poštou sa to technicky nevyžaduje. Ak nechcete používať zaručený elektronický podpis ktorý máte v občianskom preukaze, alternatívne môžete použiť službu: ....Doplní sa neskôr keď bude hotová.... </div>';
 		
 		$ret.='<p>Touto aplikáciou si môžete vygenerovať upravený vzor, ktorý po doplnení osobných údajov môžete odoslať na úrad vašej obce, a oni Vám odošlú hlasovací preukaz alebo hlasovacie lístky pre hlasovanie poštou.</p>';
 		$ret.='<p>Vo vygenerovanom súbore v hlavičke je k dispozícii email na ktorý máte žiadosť odoslať. Postupujte nasledovne:</p>
